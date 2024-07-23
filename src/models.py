@@ -7,24 +7,37 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
+class Usuario(Base):
+    __tablename__ = 'usuario'
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    nombre = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    clave = Column(String(250), nullable=False)
+    favoritos = relationship("favoritos", backref="usuario", lazy=True)
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+class Personaje(Base):
+    __tablename__ = 'personajes'
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    nombre = Column(String(250), nullable=False)
+    genero = Column(String(250), nullable=False)
+    color_ojos = Column(String(250), nullable=False)
+    personaje_favorito = relationship("favoritos", backref="personajes", lazy=True)
+    
+class Planeta(Base):
+    __tablename__ = 'planetas'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(250), nullable=False)
+    población = Column(String(250), nullable=False)
+    territorio = Column(String(250), nullable=False)
+    planeta_favorito = relationship("Favoritos", backref="Planeta", lazy=True)
 
+class Favoritos(Base):
+    __tablename__ = 'favoritos'
+    id = Column(Integer, primary_key=True)
+    id_usuario = Column(Integer, ForeignKey("usuario.id"), nullable=False)
+    id_planeta = Column(Integer, ForeignKey("planetas.id"), nullable=True)
+    id_personaje = Column(Integer, ForeignKey("personajes.id"), nullable=True)
+    
     def to_dict(self):
         return {}
 
