@@ -20,7 +20,11 @@ class Personaje(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(250), nullable=False)
     genero = Column(String(250), nullable=False)
+    año_nacimiento = Column(String(250), nullable=False)
+    altura = Column(String(250), nullable=False)
     color_ojos = Column(String(250), nullable=False)
+    color_piel = Column(String(250), nullable=False)
+    color_cabello = Column(String(250), nullable=False)
     personaje_favorito = relationship("favoritos", backref="personajes", lazy=True)
     
 class Planeta(Base):
@@ -29,6 +33,10 @@ class Planeta(Base):
     nombre = Column(String(250), nullable=False)
     población = Column(String(250), nullable=False)
     territorio = Column(String(250), nullable=False)
+    clima = Column(String(250), nullable=False)
+    periodo_orbital = Column(String(250), nullable=False)
+    periodo_rotacion = Column(String(250), nullable=False)
+    diametro = Column(String(250), nullable=False)
     planeta_favorito = relationship("Favoritos", backref="Planeta", lazy=True)
 
 class Favoritos(Base):
